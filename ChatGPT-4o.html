@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercado Local</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            animation: fadeInBody 1.5s ease-in-out;
+        }
+        @keyframes fadeInBody {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://source.unsplash.com/1600x900/?market') no-repeat center center;
+            background-size: cover;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+        .card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+            animation: slideUp 1s ease-in-out;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        .btn-custom {
+            background-color: #ff5722;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+            animation: bounceIn 1s ease-in-out;
+        }
+        .btn-custom:hover {
+            background-color: #e64a19;
+            transform: scale(1.1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes bounceIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .gallery img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.3s;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        .gallery img:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+        footer {
+            background: #333;
+            color: white;
+            padding: 20px 0;
+            animation: slideUp 1.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <header class="hero">
+        <div class="container">
+            <h1 class="display-4">Bienvenido al Mercado Local</h1>
+            <p class="lead">Descubre los mejores productos y puestos de la ciudad.</p>
+            <a href="#contacto" class="btn btn-custom btn-lg">Contáctanos</a>
+        </div>
+    </header>
+
+    <section class="container my-5">
+        <h2 class="text-center">Galería</h2>
+        <div class="row gallery">
+            <div class="col-md-4"><img src="https://source.unsplash.com/400x300/?market" alt="Mercado"></div>
+            <div class="col-md-4"><img src="https://source.unsplash.com/400x300/?food" alt="Comida"></div>
+            <div class="col-md-4"><img src="https://source.unsplash.com/400x300/?handmade" alt="Artesanías"></div>
+        </div>
+    </section>
+
+    <section class="container my-5 testimonial text-center">
+        <h2>Testimonios</h2>
+        <p class="lead">"El mejor mercado de la ciudad, siempre con productos frescos y de calidad."</p>
+        <p>- Cliente Satisfecho</p>
+    </section>
+
+    <section class="container my-5" id="contacto">
+        <h2 class="text-center">Contacto</h2>
+        <form>
+            <div class="mb-3">
+                <label for="name" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Correo Electrónico</label>
+                <input type="email" class="form-control" id="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="message" class="form-label">Mensaje</label>
+                <textarea class="form-control" id="message" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-custom">Enviar</button>
+        </form>
+    </section>
+
+    <footer class="text-center">
+        <p>Mercado Local (c) 2025 - Todos los derechos reservados</p>
+    </footer>
+</body>
+</html>
+
