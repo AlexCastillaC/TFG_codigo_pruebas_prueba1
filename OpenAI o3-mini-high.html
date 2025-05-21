@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mercado Local - Landing Page Modernizada</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- FontAwesome para iconos -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+  <!-- Animate.css para animaciones adicionales -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <!-- Estilos personalizados -->
+  <style>
+    :root {
+      --primary-color: #ff6b6b;    /* Rojo coral */
+      --secondary-color: #1a535c;  /* Azul oscuro */
+      --light-color: #f7f7f7;      /* Fondo claro */
+      --dark-color: #333;          /* Texto oscuro */
+      --accent-color: #ffe66d;     /* Amarillo suave */
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: var(--light-color);
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    /* Estilos para Dark Mode */
+    body.dark-mode {
+      background-color: #222;
+      color: #ccc;
+    }
+    body.dark-mode .navbar {
+      background: #333;
+    }
+    body.dark-mode .navbar-brand,
+    body.dark-mode .nav-link {
+      color: #ccc !important;
+    }
+    body.dark-mode #presentacion::before {
+      background-color: rgba(26,83,92,0.8);
+    }
+    body.dark-mode .card {
+      background: #333;
+      color: #ccc;
+    }
+    body.dark-mode .btn-primary {
+      background-color: var(--accent-color);
+      border: none;
+    }
+    body.dark-mode #faq .card-header {
+      background: #444;
+    }
+    body.dark-mode footer {
+      background: #333;
+    }
+    /* Canvas de fondo para efectos visuales */
+    #bgCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+    /* Navbar */
+    .navbar {
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .navbar-brand, .nav-link {
+      color: var(--secondary-color) !important;
+      font-weight: 500;
+    }
+    .nav-link:hover {
+      color: var(--primary-color) !important;
+    }
+    /* Logo */
+    .navbar-brand img {
+      margin-right: 10px;
+    }
+    /* Animación de zoom en el fondo de presentación */
+    @keyframes zoomBackground {
+      0% { background-size: 100%; }
+      50% { background-size: 110%; }
+      100% { background-size: 100%; }
+    }
+    /* Sección de Presentación */
+    #presentacion {
+      background: url('https://via.placeholder.com/1920x600') center center/cover no-repeat;
+      height: 600px;
+      position: relative;
+      color: #fff;
+      animation: zoomBackground 20s ease infinite;
+    }
+    #presentacion::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(26,83,92,0.6);
+    }
+    #presentacion .contenido {
+      position: relative;
+      z-index: 1;
+    }
+    /* Animación slideInUp para el contenido del hero (usando Animate.css) */
+    .contenido > * {
+      animation: animate__slideInUp 1s ease-out;
+    }
+    /* Efectos de entrada al hacer scroll */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Tarjetas con efecto 3D y hover */
+    .card {
+      border: none;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      background: #fff;
+    }
+    .card:hover {
+      transform: perspective(500px) translateY(-10px) scale(1.02);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    }
+    /* Botones personalizados */
+    .btn-primary {
+      background-color: var(--primary-color);
+      border: none;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    .btn-primary:hover {
+      background-color: var(--accent-color);
+      transform: scale(1.05);
+    }
+    /* Efectos en enlaces de redes sociales */
+    footer .social-icons a {
+      color: #fff;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    footer .social-icons a:hover {
+      transform: scale(1.2);
+      color: var(--accent-color);
+    }
+    /* Sección Newsletter */
+    #newsletter {
+      background: var(--primary-color);
+      color: #fff;
+      padding: 50px 0;
+    }
+    #newsletter input, #newsletter button {
+      border-radius: 50px;
+    }
+    #newsletter input {
+      border: none;
+      padding: 10px 20px;
+      min-width: 250px;
+    }
+    #newsletter button {
+      background-color: var(--secondary-color);
+      border: none;
+      padding: 10px 30px;
+    }
+    /* Sección FAQ - Acordeón */
+    #faq .card-header {
+      background: var(--secondary-color);
+      color: #fff;
+    }
+    #faq .card-body {
+      background: #fff;
+      color: var(--dark-color);
+    }
+    /* Footer */
+    footer {
+      background: var(--secondary-color);
+      padding: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Canvas de fondo para efectos visuales -->
+  <canvas id="bgCanvas"></canvas>
+
+  <!-- Barra de navegación -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <a class="navbar-brand" href="#">
+      <img src="https://via.placeholder.com/50" width="50" height="50" alt="Logo">
+      Mercado Local
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <!-- Menú principal -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="#presentacion">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="#puestos">Puestos</a></li>
+        <li class="nav-item"><a class="nav-link" href="#productos">Productos</a></li>
+        <li class="nav-item"><a class="nav-link" href="#testimonios">Testimonios</a></li>
+        <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+      </ul>
+      <!-- Barra de búsqueda -->
+      <form class="form-inline my-2 my-lg-0 ml-3">
+        <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+      </form>
+      <!-- Botón de modo diurno/nocturno -->
+      <button id="toggleMode" class="btn btn-sm btn-outline-secondary ml-3" title="Cambiar modo">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Sección de Presentación -->
+  <section id="presentacion" class="d-flex align-items-center">
+    <div class="container text-center contenido">
+      <h1 class="display-4 animate__animated animate__fadeInDown">Bienvenidos al Mercado Local</h1>
+      <p class="lead animate__animated animate__fadeInUp">Descubre la mejor selección de puestos y productos de nuestra comunidad.</p>
+      <a href="#puestos" class="btn btn-primary btn-lg animate__animated animate__pulse animate__infinite">Explorar Puestos</a>
+    </div>
+  </section>
+
+  <!-- Sección de Puestos -->
+  <section id="puestos" class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-5 text-uppercase" style="color: var(--secondary-color);">Nuestros Puestos</h2>
+      <div class="row">
+        <!-- Puesto 1 -->
+        <div class="col-md-4 mb-4">
+          <div class="card fade-in">
+            <img src="https://via.placeholder.com/350x200" class="card-img-top" alt="Puesto de Frutas">
+            <div class="card-body">
+              <h5 class="card-title" style="color: var(--primary-color);">Puesto de Frutas</h5>
+              <p class="card-text">Ofrecemos una gran variedad de frutas frescas y de temporada.</p>
+              <a href="#" class="btn btn-outline-primary">Ver más</a>
+            </div>
+          </div>
+        </div>
+        <!-- Puesto 2 -->
+        <div class="col-md-4 mb-4">
+          <div class="card fade-in">
+            <img src="https://via.placeholder.com/350x200" class="card-img-top" alt="Puesto de Verduras">
+            <div class="card-body">
+              <h5 class="card-title" style="color: var(--primary-color);">Puesto de Verduras</h5>
+              <p class="card-text">Verduras frescas y cultivadas localmente para tu salud.</p>
+              <a href="#" class="btn btn-outline-primary">Ver más</a>
+            </div>
+          </div>
+        </div>
+        <!-- Puesto 3 -->
+        <div class="col-md-4 mb-4">
+          <div class="card fade-in">
+            <img src="https://via.placeholder.com/350x200" class="card-img-top" alt="Puesto de Artesanías">
+            <div class="card-body">
+              <h5 class="card-title" style="color: var(--primary-color);">Puesto de Artesanías</h5>
+              <p class="card-text">Productos artesanales únicos, hechos con pasión y tradición.</p>
+              <a href="#" class="btn btn-outline-primary">Ver más</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Productos -->
+  <section id="productos" class="py-5 bg-light">
+    <div class="container">
+      <h2 class="text-center mb-5" style="color: var(--secondary-color);">Productos Destacados</h2>
+      <div class="row">
+        <!-- Producto 1 -->
+        <div class="col-md-3 mb-4">
+          <div class="card fade-in">
+            <img src="https://via.placeholder.com/250x200" class="card-img-top" alt="Manzanas">
+            <div class="card-body">
+              <h5 class="card-title" style="color: var(--primary-color);">Manzanas</h5>
+              <p class="card-text">Manzanas frescas de la región.</p>
+              <p class="card-text font-weight-bold">$1.50</p>
+              <a href="#" class="btn btn-sm btn-outline-primary">Comprar</a>
+            </div>
+          </div>
+        </div>
+        <!-- Producto 2 -->
+        <div class="col-md-3 mb-4">
+          <div class="card fade-in">
+            <img src="https://via.placeholder.com/250x200" class="card-img-top" alt="Zanahorias">
+            <div class="card-body">
+              <h5 class="card-title" style="color: var(--primary-color);">Zanahorias</h5>
+              <p class="card-text">Zanahorias orgánicas y deliciosas.</p>
+              <p class="card-text font-weight-bold">$0.80</p>
+              <a href="#" class="btn btn-sm btn-outline-primary">Comprar</a>
+            </div>
+          </div>
+        </div>
+        <!-- Producto 3 -->
+        <div class="col-md-3 mb-4">
+          <div class="card fade-in">
+            <img src="https://via.placeholder.com/250x200" class="card-img-top" alt="Pan Artesanal">
+            <div class="card-body">
+              <h5 class="card-title" style="color: var(--primary-color);">Pan Artesanal</h5>
+              <p class="card-text">Delicioso pan recién horneado.</p>
+              <p class="card-text font-weight-bold">$2.00</p>
+              <a href="#" class="btn btn-sm btn-outline-primary">Comprar</a>
+            </div>
+          </div>
+        </div>
+        <!-- Producto 4 -->
+        <div class="col-md-3 mb-4">
+          <div class="card fade-in">
+            <img src="https://via.placeholder.com/250x200" class="card-img-top" alt="Queso Local">
+            <div class="card-body">
+              <h5 class="card-title" style="color: var(--primary-color);">Queso Local</h5>
+              <p class="card-text">Queso de cabra artesanal, sabor inigualable.</p>
+              <p class="card-text font-weight-bold">$3.50</p>
+              <a href="#" class="btn btn-sm btn-outline-primary">Comprar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Testimonios -->
+  <section id="testimonios" class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-5" style="color: var(--secondary-color);">Testimonios</h2>
+      <div id="carouselTestimonios" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carouselTestimonios" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselTestimonios" data-slide-to="1"></li>
+          <li data-target="#carouselTestimonios" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+          <!-- Testimonio 1 -->
+          <div class="carousel-item active">
+            <div class="d-flex flex-column align-items-center">
+              <img src="https://via.placeholder.com/100" class="rounded-circle mb-3" alt="Cliente 1">
+              <p class="text-center lead">"El Mercado Local tiene los productos más frescos y de mejor calidad. ¡Recomendado!"</p>
+              <small>- Ana Pérez</small>
+            </div>
+          </div>
+          <!-- Testimonio 2 -->
+          <div class="carousel-item">
+            <div class="d-flex flex-column align-items-center">
+              <img src="https://via.placeholder.com/100" class="rounded-circle mb-3" alt="Cliente 2">
+              <p class="text-center lead">"Un ambiente encantador y un servicio excepcional. Siempre vuelvo."</p>
+              <small>- Carlos Rodríguez</small>
+            </div>
+          </div>
+          <!-- Testimonio 3 -->
+          <div class="carousel-item">
+            <div class="d-flex flex-column align-items-center">
+              <img src="https://via.placeholder.com/100" class="rounded-circle mb-3" alt="Cliente 3">
+              <p class="text-center lead">"Variedad, calidad y precios accesibles. ¡No puedo pedir más!"</p>
+              <small>- María González</small>
+            </div>
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselTestimonios" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Anterior</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselTestimonios" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Siguiente</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Preguntas Frecuentes (FAQ) -->
+  <section id="faq" class="py-5 bg-light">
+    <div class="container">
+      <h2 class="text-center mb-5" style="color: var(--secondary-color);">Preguntas Frecuentes</h2>
+      <div class="accordion" id="accordionFAQ">
+        <!-- FAQ 1 -->
+        <div class="card">
+          <div class="card-header" id="faqHeading1">
+            <h2 class="mb-0">
+              <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                data-target="#faqCollapse1" aria-expanded="true" aria-controls="faqCollapse1">
+                ¿Cuál es el horario de atención del mercado?
+              </button>
+            </h2>
+          </div>
+          <div id="faqCollapse1" class="collapse show" aria-labelledby="faqHeading1" data-parent="#accordionFAQ">
+            <div class="card-body">
+              El mercado está abierto de lunes a sábado de 8:00 a.m. a 8:00 p.m.
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 2 -->
+        <div class="card">
+          <div class="card-header" id="faqHeading2">
+            <h2 class="mb-0">
+              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                data-target="#faqCollapse2" aria-expanded="false" aria-controls="faqCollapse2">
+                ¿Aceptan tarjetas de crédito?
+              </button>
+            </h2>
+          </div>
+          <div id="faqCollapse2" class="collapse" aria-labelledby="faqHeading2" data-parent="#accordionFAQ">
+            <div class="card-body">
+              Sí, aceptamos tarjetas de crédito y débito.
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 3 -->
+        <div class="card">
+          <div class="card-header" id="faqHeading3">
+            <h2 class="mb-0">
+              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                data-target="#faqCollapse3" aria-expanded="false" aria-controls="faqCollapse3">
+                ¿Se pueden hacer pedidos para eventos?
+              </button>
+            </h2>
+          </div>
+          <div id="faqCollapse3" class="collapse" aria-labelledby="faqHeading3" data-parent="#accordionFAQ">
+            <div class="card-body">
+              Sí, ofrecemos servicio de pedidos especiales para eventos. Contáctanos para más información.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Newsletter -->
+  <section id="newsletter">
+    <div class="container text-center">
+      <h2 class="mb-4">Suscríbete a nuestro Newsletter</h2>
+      <p>Recibe las últimas noticias y ofertas exclusivas directamente en tu correo.</p>
+      <form class="form-inline justify-content-center mt-4">
+        <div class="form-group mb-2">
+          <label for="emailNewsletter" class="sr-only">Correo electrónico</label>
+          <input type="email" class="form-control" id="emailNewsletter" placeholder="Ingresa tu correo">
+        </div>
+        <button type="submit" class="btn btn-primary mb-2 ml-2">Suscribirse</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Sección de Contacto -->
+  <section id="contacto" class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-5" style="color: var(--secondary-color);">Contáctanos</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <form>
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" class="form-control" id="nombre" placeholder="Tu nombre">
+            </div>
+            <div class="form-group">
+              <label for="correo">Correo electrónico</label>
+              <input type="email" class="form-control" id="correo" placeholder="tu@correo.com">
+            </div>
+            <div class="form-group">
+              <label for="mensaje">Mensaje</label>
+              <textarea class="form-control" id="mensaje" rows="4" placeholder="Escribe tu mensaje aquí"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-4">
+    <div class="container text-center">
+      <p>(c) 2025 Mercado Local. Todos los derechos reservados.</p>
+      <div class="social-icons">
+        <a href="#" class="mx-2"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="mx-2"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="mx-2"><i class="fab fa-twitter"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- jQuery, Popper.js y Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <!-- JavaScript para animar elementos al hacer scroll y para el modo diurno/nocturno -->
+  <script>
+    // Mostrar elementos con efecto 'fade-in' al hacer scroll
+    function mostrarElementos() {
+      const elementos = document.querySelectorAll('.fade-in');
+      const ventanaAltura = window.innerHeight;
+      elementos.forEach(el => {
+        const posicion = el.getBoundingClientRect().top;
+        if (posicion < ventanaAltura - 50) {
+          el.classList.add('visible');
+        }
+      });
+    }
+    window.addEventListener('scroll', mostrarElementos);
+    window.addEventListener('load', mostrarElementos);
+
+    // Alternar modo diurno/nocturno
+    document.getElementById('toggleMode').addEventListener('click', function() {
+      document.body.classList.toggle('dark-mode');
+      const icon = this.querySelector('i');
+      if(document.body.classList.contains('dark-mode')) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+      } else {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+      console.log("Landing Page cargada y animada correctamente.");
+    });
+  </script>
+
+  <!-- JavaScript para efectos visuales en canvas con más interactividad -->
+  <script>
+    const canvas = document.getElementById('bgCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Ajustar el tamaño del canvas
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Registrar la posición del mouse
+    let mouse = { x: null, y: null, radius: 100 };
+    window.addEventListener('mousemove', function(e) {
+      mouse.x = e.x;
+      mouse.y = e.y;
+    });
+
+    // Clase para definir formas
+    class Shape {
+      constructor(x, y, dx, dy, size, type, color) {
+        this.x = x;
+        this.y = y;
+        this.dx = dx;
+        this.dy = dy;
+        this.size = size;
+        this.type = type; // 'circle', 'square', 'triangle'
+        this.color = color;
+      }
+
+      draw() {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        if(this.type === 'circle') {
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+        } else if(this.type === 'square') {
+          ctx.rect(this.x - this.size, this.y - this.size, this.size * 2, this.size * 2);
+        } else if(this.type === 'triangle') {
+          ctx.moveTo(this.x, this.y - this.size);
+          ctx.lineTo(this.x - this.size, this.y + this.size);
+          ctx.lineTo(this.x + this.size, this.y + this.size);
+          ctx.closePath();
+        }
+        ctx.fill();
+      }
+
+      update(shapes) {
+        // Mover la forma
+        this.x += this.dx;
+        this.y += this.dy;
+
+        // Rebotar en los bordes del canvas
+        if(this.x - this.size < 0 || this.x + this.size > canvas.width) {
+          this.dx = -this.dx;
+        }
+        if(this.y - this.size < 0 || this.y + this.size > canvas.height) {
+          this.dy = -this.dy;
+        }
+
+        // Detección básica de colisiones entre formas
+        for(let other of shapes) {
+          if(other !== this) {
+            let dx = other.x - this.x;
+            let dy = other.y - this.y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+            if(distance < this.size + other.size) {
+              // Intercambiar direcciones (efecto muy básico de colisión)
+              this.dx = -this.dx;
+              this.dy = -this.dy;
+              other.dx = -other.dx;
+              other.dy = -other.dy;
+            }
+          }
+        }
+
+        // Interacción con el mouse: si la forma está cerca, se repelen
+        if(mouse.x !== null && mouse.y !== null) {
+          let dxMouse = mouse.x - this.x;
+          let dyMouse = mouse.y - this.y;
+          let distanceMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
+          if(distanceMouse < mouse.radius + this.size) {
+            let angle = Math.atan2(dyMouse, dxMouse);
+            this.dx = -Math.cos(angle);
+            this.dy = -Math.sin(angle);
+          }
+        }
+
+        this.draw();
+      }
+    }
+
+    // Generar formas aleatorias
+    const shapes = [];
+    const shapeTypes = ['circle', 'square', 'triangle'];
+    const colors = ['rgba(255,107,107,0.6)', 'rgba(26,83,92,0.6)', 'rgba(255,230,109,0.6)'];
+    for(let i = 0; i < 25; i++) {
+      const size = Math.random() * 20 + 10;
+      const x = Math.random() * (canvas.width - size * 2) + size;
+      const y = Math.random() * (canvas.height - size * 2) + size;
+      const dx = (Math.random() - 0.5) * 2;
+      const dy = (Math.random() - 0.5) * 2;
+      const type = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      shapes.push(new Shape(x, y, dx, dy, size, type, color));
+    }
+
+    // Dibujar líneas que conecten las formas cuando estén cerca
+    function connectShapes() {
+      for(let a = 0; a < shapes.length; a++) {
+        for(let b = a + 1; b < shapes.length; b++) {
+          let dx = shapes[a].x - shapes[b].x;
+          let dy = shapes[a].y - shapes[b].y;
+          let distance = Math.sqrt(dx * dx + dy * dy);
+          if(distance < 150) {
+            ctx.strokeStyle = 'rgba(200,200,200,' + (1 - distance / 150) + ')';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(shapes[a].x, shapes[a].y);
+            ctx.lineTo(shapes[b].x, shapes[b].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    // Animar las formas y efectos adicionales
+    function animate() {
+      requestAnimationFrame(animate);
+      // Efecto de trail: dibujar un rectángulo semitransparente que permita ver la estela
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      shapes.forEach(shape => shape.update(shapes));
+      connectShapes();
+    }
+    animate();
+  </script>
+</body>
+</html>
