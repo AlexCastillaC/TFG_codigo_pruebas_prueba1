@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mercado Local - Los Sabores de tu Ciudad</title>
+
+  <!-- Estilos externos -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- Estilos personalizados -->
+  <style>
+    /* Variables y estilos globales */
+    :root {
+      --primary-color: #2ecc71;
+      --secondary-color: #f1c40f;
+      --dark-color: #2c3e50;
+      --light-color: #ecf0f1;
+      /* Puedes definir aquí también: --gradient-dark, --gradient-primary, --accent-color, --transition, --box-shadow, etc. */
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* =====================
+       Sección: Loader
+    ===================== */
+    .loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+    .loader.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .loader-content {
+      width: 50px;
+      height: 50px;
+      border: 3px solid var(--primary-color);
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* =====================
+       Sección: Navbar
+    ===================== */
+    .navbar {
+      background: rgba(44, 62, 80, 0.95) !important;
+      backdrop-filter: blur(10px);
+    }
+    .navbar-brand {
+      font-weight: 700;
+      color: var(--primary-color) !important;
+    }
+
+    /* =====================
+       Sección: Hero
+    ===================== */
+    .hero-section {
+      background: linear-gradient(
+          rgba(0, 0, 0, 0.6),
+          rgba(0, 0, 0, 0.6)
+        ),
+        url('/api/placeholder/1920/1080');
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+    .floating-shape {
+      position: absolute;
+      background: var(--primary-color);
+      opacity: 0.1;
+      border-radius: 50%;
+      animation: float 15s infinite;
+    }
+    .shape-1 {
+      width: 300px;
+      height: 300px;
+      top: -150px;
+      left: -150px;
+    }
+    .shape-2 {
+      width: 200px;
+      height: 200px;
+      bottom: -100px;
+      right: -100px;
+      animation-delay: 2s;
+    }
+    @keyframes float {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+      50% {
+        transform: translate(50px, 50px) rotate(180deg);
+      }
+      100% {
+        transform: translate(0, 0) rotate(360deg);
+      }
+    }
+
+    /* =====================
+       Sección: Tarjetas (Puestos, Productos, Testimonios, etc.)
+    ===================== */
+    .puesto-card,
+    .producto-card {
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .puesto-card {
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    .puesto-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+    .producto-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    .producto-card img {
+      height: 200px;
+      object-fit: cover;
+      transition: all 0.3s ease;
+    }
+    .producto-card:hover img {
+      transform: scale(1.1);
+    }
+    .testimonial-card {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      margin: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    .testimonial-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+    }
+
+    /* =====================
+       Sección: Títulos y Separadores
+    ===================== */
+    .section-title {
+      position: relative;
+      padding-bottom: 20px;
+      margin-bottom: 50px;
+      text-align: center;
+    }
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: var(--primary-color);
+    }
+
+    /* =====================
+       Sección: Características y Funciones
+    ===================== */
+    .features-section {
+      background: var(--light-color);
+    }
+    .feature-item {
+      text-align: center;
+      padding: 30px;
+      border-radius: 15px;
+      background: white;
+      transition: all 0.3s ease;
+    }
+    .feature-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    .feature-icon {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
+
+    /* =====================
+       Sección: CTA y Newsletter
+    ===================== */
+    .cta-section {
+      background: linear-gradient(
+          rgba(46, 204, 113, 0.9),
+          rgba(46, 204, 113, 0.9)
+        ),
+        url('/api/placeholder/1920/1080');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+      padding: 100px 0;
+    }
+    .newsletter-form {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .btn-custom {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+    }
+    .btn-custom:hover {
+      background: #27ae60;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* =====================
+       Sección: Categorías y Ofertas
+    ===================== */
+    .category-card {
+      position: relative;
+      height: 200px;
+      border-radius: 20px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .category-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+    .category-card:hover img {
+      transform: scale(1.1);
+    }
+    .category-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--gradient-dark);
+      opacity: 0.7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    .offer-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--accent-color);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-weight: 600;
+      z-index: 1;
+    }
+
+    /* =====================
+       Sección: Swiper y Overlays de Producto
+    ===================== */
+    .swiper {
+      width: 100%;
+      padding: 50px 0;
+    }
+    .swiper-slide {
+      background-position: center;
+      background-size: cover;
+      width: 300px;
+      height: 400px;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+    .product-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+      padding: 20px;
+      color: white;
+      transform: translateY(100px);
+      transition: var(--transition);
+    }
+    .swiper-slide:hover .product-overlay {
+      transform: translateY(0);
+    }
+
+    /* =====================
+       Sección: Mapa y Newsletter Adicional
+    ===================== */
+    .map-container {
+      height: 400px;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .newsletter-container {
+      background: var(--gradient-primary);
+      border-radius: 20px;
+      padding: 40px;
+      color: white;
+    }
+    .newsletter-input {
+      border-radius: 50px;
+      padding: 15px 25px;
+      border: none;
+      width: 100%;
+      margin-right: 10px;
+    }
+
+    /* =====================
+       Sección: Galería de Instagram
+    ===================== */
+    .instagram-gallery {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .instagram-item {
+      position: relative;
+      aspect-ratio: 1;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+    .instagram-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+    .instagram-item:hover img {
+      transform: scale(1.1);
+    }
+
+    /* =====================
+       Sección: Notificación Toast
+    ===================== */
+    .notification-toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: white;
+      border-radius: 10px;
+      padding: 15px 25px;
+      box-shadow: var(--box-shadow);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transform: translateX(200%);
+      transition: var(--transition);
+      z-index: 1000;
+    }
+    .notification-toast.show {
+      transform: translateX(0);
+    }
+
+    /* =====================
+       Botón: Scroll to Top
+    ===================== */
+    .scroll-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--primary-color);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+    .scroll-to-top.visible {
+      opacity: 1;
+    }
+
+    /* =====================
+       Media Queries
+    ===================== */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+      .instagram-gallery {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .feature-item {
+        margin-bottom: 20px;
+      }
+    }
+    @media (max-width: 576px) {
+      .hero-section {
+        height: auto;
+        min-height: 100vh;
+        padding: 100px 0;
+      }
+      .instagram-gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .newsletter-form {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Loader -->
+  <div class="loader">
+    <div class="loader-content"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <i class="fas fa-store-alt me-2"></i>Mercado Local
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#inicio">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#caracteristicas">Características</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#puestos">Puestos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#productos">Productos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#testimonios">Testimonios</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contacto">Contacto</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="inicio" class="hero-section">
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="container text-center hero-content">
+      <h1 class="display-2 mb-4 fw-bold" data-aos="fade-up">
+        Bienvenido al Mercado Local
+      </h1>
+      <p class="lead mb-4" data-aos="fade-up" data-aos-delay="200">
+        Descubre los sabores auténticos y productos frescos de nuestra comunidad
+      </p>
+      <div data-aos="fade-up" data-aos-delay="400">
+        <a href="#puestos" class="btn btn-custom btn-lg me-3">
+          <i class="fas fa-store me-2"></i>Explorar Puestos
+        </a>
+        <a href="#productos" class="btn btn-outline-light btn-lg">
+          <i class="fas fa-shopping-basket me-2"></i>Ver Productos
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="caracteristicas" class="features-section py-5">
+    <div class="container">
+      <h2 class="section-title text-center">¿Por qué elegirnos?</h2>
+      <div class="row g-4">
+        <div class="col-md-4" data-aos="fade-up">
+          <div class="feature-item">
+            <i class="fas fa-leaf feature-icon"></i>
+            <h4>Productos Frescos</h4>
+            <p>
+              Seleccionamos cuidadosamente productos frescos y de temporada todos
+              los días.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="feature-item">
+            <i class="fas fa-users feature-icon"></i>
+            <h4>Comercio Local</h4>
+            <p>
+              Apoyamos a productores locales y fomentamos el desarrollo de nuestra
+              comunidad.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="feature-item">
+            <i class="fas fa-dollar-sign feature-icon"></i>
+            <h4>Precios Justos</h4>
+            <p>
+              Ofrecemos precios competitivos y justos tanto para vendedores como
+              compradores.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección: Puestos -->
+  <section id="puestos" class="py-5">
+    <div class="container">
+      <h2 class="section-title text-center">Nuestros Puestos</h2>
+      <div class="row g-4">
+        <div class="col-md-4" data-aos="fade-up">
+          <div class="puesto-card card">
+            <div class="position-relative">
+              <img
+                src="/api/placeholder/400/300"
+                class="card-img-top"
+                alt="Puesto de Frutas"
+              />
+              <div class="position-absolute top-0 start-0 m-3">
+                <span class="badge bg-success">Abierto</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Frutas del Campo</h5>
+              <p class="card-text">
+                Las mejores frutas de temporada, frescas y seleccionadas.
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="text-muted mb-0">Pasillo A - Puesto 1</p>
+                <a href="#" class="btn btn-outline-success">
+                  <i class="fas fa-info-circle me-2"></i>Más Info
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="puesto-card card">
+            <div class="position-relative">
+              <img
+                src="/api/placeholder/400/300"
+                class="card-img-top"
+                alt="Puesto de Verduras"
+              />
+              <div class="position-absolute top-0 start-0 m-3">
+                <span class="badge bg-success">Abierto</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Verduras Orgánicas</h5>
+              <p class="card-text">Productos orgánicos cultivados localmente.</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="text-muted mb-0">Pasillo B - Puesto 3</p>
+                <a href="#" class="btn btn-outline-success">
+                  <i class="fas fa-info-circle me-2"></i>Más Info
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="puesto-card card">
+            <div class="position-relative">
+              <img
+                src="/api/placeholder/400/300"
+                class="card-img-top"
+                alt="Puesto de Carnes"
+              />
+              <div class="position-absolute top-0 start-0 m-3">
+                <span class="badge bg-success">Abierto</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Carnicería Don Pedro</h5>
+              <p class="card-text">Carnes frescas y de primera calidad.</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="text-muted mb-0">Pasillo C - Puesto 5</p>
+                <a href="#" class="btn btn-outline-success">
+                  <i class="fas fa-info-circle me-2"></i>Más Info
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección: Testimonios -->
+  <section id="testimonios" class="py-5">
+    <div class="container">
+      <h2 class="section-title text-center">
+        Lo que dicen nuestros clientes
+      </h2>
+      <div class="row">
+        <div class="col-md-4" data-aos="fade-up">
+          <div class="testimonial-card">
+            <img
+              src="/api/placeholder/80/80"
+              class="testimonial-img"
+              alt="Cliente 1"
+            />
+            <h5>María González</h5>
+            <p class="text-muted">Cliente Regular</p>
+            <p>
+              "Los productos son siempre frescos y los vendedores muy amables.
+              ¡El mejor mercado de la ciudad!"
+            </p>
+            <div class="text-warning">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="testimonial-card">
+            <img
+              src="/api/placeholder/80/80"
+              class="testimonial-img"
+              alt="Cliente 2"
+            />
+            <h5>Juan Pérez</h5>
+            <p class="text-muted">Chef Local</p>
+            <p>
+              "Encuentro todos los ingredientes que necesito para mi restaurante.
+              La calidad es excepcional."
+            </p>
+            <div class="text-warning">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="testimonial-card">
+            <img
+              src="/api/placeholder/80/80"
+              class="testimonial-img"
+              alt="Cliente 3"
+            />
+            <h5>Ana Martínez</h5>
+            <p class="text-muted">Ama de Casa</p>
+            <p>
+              "Los precios son muy buenos y la variedad de productos es increíble.
+              Siempre encuentro lo que busco."
+            </p>
+            <div class="text-warning">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección: CTA / Newsletter -->
+  <section class="cta-section">
+    <div class="container">
+      <h2 class="mb-4">¡Únete a nuestra comunidad!</h2>
+      <p class="mb-4">
+        Recibe ofertas especiales y noticias sobre nuestros productos
+      </p>
+      <form class="newsletter-form">
+        <div class="input-group mb-3">
+          <input
+            type="email"
+            class="form-control"
+            placeholder="Tu correo electrónico"
+            aria-label="Email"
+          />
+          <button class="btn btn-light" type="submit">Suscribirse</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Sección: Contacto -->
+  <section id="contacto" class="py-5">
+    <div class="container">
+      <h2 class="section-title text-center">Contacto</h2>
+      <div class="row">
+        <div class="col-md-6" data-aos="fade-right">
+          <div class="card p-4">
+            <h4>
+              <i class="fas fa-map-marker-alt me-2"></i>Ubicación
+            </h4>
+            <p>Av. Principal #123, Ciudad</p>
+            <h4 class="mt-4">
+              <i class="fas fa-clock me-2"></i>Horario
+            </h4>
+            <p>
+              Lunes a Sábado: 7:00 AM - 6:00 PM<br />
+              Domingo: 7:00 AM - 2:00 PM
+            </p>
+            <h4 class="mt-4">
+              <i class="fas fa-phone me-2"></i>Teléfono
+            </h4>
+            <p>(123) 456-7890</p>
+          </div>
+        </div>
+        <div class="col-md-6" data-aos="fade-left">
+          <form class="card p-4">
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombre" required />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" required />
+            </div>
+            <div class="mb-3">
+              <label for="mensaje" class="form-label">Mensaje</label>
+              <textarea class="form-control" id="mensaje" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-custom">
+              Enviar Mensaje
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Botón: Scroll to Top -->
+  <div class="scroll-to-top">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
+  <!-- Sección: Explora por Categorías -->
+  <section class="py-5">
+    <div class="container">
+      <h2 class="section-title text-center">Explora por Categorías</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="category-card" data-aos="fade-up">
+            <img src="/api/placeholder/400/200" alt="Frutas y Verduras" />
+            <div class="category-overlay">Frutas y Verduras</div>
+          </div>
+        </div>
+        <!-- Más categorías... -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección: Ofertas Especiales (Swiper) -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <h2 class="section-title text-center">Ofertas Especiales</h2>
+      <div class="swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="offer-badge">-30%</div>
+            <img src="/api/placeholder/300/400" alt="Oferta 1" />
+            <div class="product-overlay">
+              <h4>Oferta Especial</h4>
+              <p>Descripción de la oferta</p>
+            </div>
+          </div>
+          <!-- Más slides... -->
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección: Galería de Instagram -->
+  <section class="py-5">
+    <div class="container">
+      <h2 class="section-title text-center">Síguenos en Instagram</h2>
+      <div class="instagram-gallery">
+        <!-- 6 imágenes de Instagram -->
+        <div class="instagram-item">
+          <img src="/api/placeholder/200/200" alt="Instagram 1" />
+        </div>
+        <!-- Más items... -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Notificación Toast -->
+  <div class="notification-toast">
+    <i class="fas fa-bell"></i>
+    <span>¡Nuevas ofertas disponibles!</span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-4 mb-md-0">
+          <h5>Mercado Local</h5>
+          <p>Tu mercado de confianza desde hace más de 25 años.</p>
+          <div class="social-links">
+            <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4 mb-md-0">
+          <h5>Enlaces Rápidos</h5>
+          <ul class="list-unstyled">
+            <li><a href="#inicio" class="text-white">Inicio</a></li>
+            <li><a href="#puestos" class="text-white">Puestos</a></li>
+            <li><a href="#productos" class="text-white">Productos</a></li>
+            <li><a href="#contacto" class="text-white">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h5>Contacto</h5>
+          <ul class="list-unstyled">
+            <li>
+              <i class="fas fa-map-marker-alt me-2"></i>Av. Principal #123
+            </li>
+            <li>
+              <i class="fas fa-phone me-2"></i>(123) 456-7890
+            </li>
+            <li>
+              <i class="fas fa-envelope me-2"></i>info@mercadolocal.com
+            </li>
+          </ul>
+        </div>
+      </div>
+      <hr class="my-4" />
+      <div class="text-center">
+        <p class="mb-0">(c) 2025 Mercado Local. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts externos -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.js"></script>
+
+  <!-- Scripts personalizados -->
+  <script>
+    // Inicializar AOS
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+
+    // Loader: ocultar después de cargar la página
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.querySelector(".loader").classList.add("fade-out");
+      }, 1000);
+    });
+
+    // Inicialización del Swiper
+    new Swiper(".swiper", {
+      effect: "coverflow",
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: "auto",
+      coverflowEffect: {
+        rotate: 50,
+        stretch: 0,
+        depth: 100,
+        modifier: 1,
+        slideShadows: true,
+      },
+      pagination: {
+        el: ".swiper-pagination",
+      },
+    });
+
+    // Notificación Toast
+    setTimeout(() => {
+      document.querySelector(".notification-toast").classList.add("show");
+      setTimeout(() => {
+        document.querySelector(".notification-toast").classList.remove("show");
+      }, 3000);
+    }, 5000);
+
+    // Animación de contadores
+    const startCounting = (element) => {
+      const target = parseInt(element.getAttribute("data-target"));
+      const duration = 2000;
+      const step = (target / duration) * 10;
+      let current = 0;
+      const timer = setInterval(() => {
+        current += step;
+        element.textContent = Math.floor(current);
+        if (current >= target) {
+          element.textContent = target;
+          clearInterval(timer);
+        }
+      }, 10);
+    };
+
+    // Iniciar conteo cuando los elementos sean visibles
+    const observers = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          startCounting(entry.target);
+          observers.unobserve(entry.target);
+        }
+      });
+    });
+    document.querySelectorAll("[data-target]").forEach((counter) => {
+      observers.observe(counter);
+    });
+
+    // Smooth scroll para enlaces internos
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener("click", function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute("href")).scrollIntoView({
+          behavior: "smooth",
+        });
+      });
+    });
+
+    // Botón Scroll to Top
+    const scrollToTopBtn = document.querySelector(".scroll-to-top");
+    window.addEventListener("scroll", () => {
+      if (window.pageYOffset > 100) {
+        scrollToTopBtn.classList.add("visible");
+      } else {
+        scrollToTopBtn.classList.remove("visible");
+      }
+    });
+    scrollToTopBtn.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    });
+  </script>
+</body>
+</html>
