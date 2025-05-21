@@ -1,0 +1,209 @@
+                        <!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+							<style>
+								body {
+									background-color: white; /* Ensure the iframe has a white background */
+								}
+
+								
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f8f9fa; /* Slightly off-white for a softer feel */
+        }
+
+        .bg-primary {
+            background-color: #6c757d !important; /* Muted brown color */
+        }
+
+        .text-dark {
+            color: #343a40 !important; /* Darker text color */
+        }
+
+        .card {
+            margin-bottom: 20px;
+            border-radius: 10px; /* Rounded corners for a softer look */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            background-color: #fffbea; /* Light pastel background */
+        }
+
+        .floating-effect {
+            transition: transform 0.3s ease;
+        }
+
+        .floating-effect:hover {
+            transform: translateY(-10px);
+        }
+
+        /* Animaciones adicionales */
+        h1, h2 {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+
+        h1.aos-animate, h2.aos-animate {
+            opacity: 1;
+            transform: none;
+        }
+    
+
+							</style>
+                        </head>
+                        <body>
+                            <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page Rural</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- AOS CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f8f9fa; /* Slightly off-white for a softer feel */
+        }
+
+        .bg-primary {
+            background-color: #6c757d !important; /* Muted brown color */
+        }
+
+        .text-dark {
+            color: #343a40 !important; /* Darker text color */
+        }
+
+        .card {
+            margin-bottom: 20px;
+            border-radius: 10px; /* Rounded corners for a softer look */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            background-color: #fffbea; /* Light pastel background */
+        }
+
+        .floating-effect {
+            transition: transform 0.3s ease;
+        }
+
+        .floating-effect:hover {
+            transform: translateY(-10px);
+        }
+
+        /* Animaciones adicionales */
+        h1, h2 {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+
+        h1.aos-animate, h2.aos-animate {
+            opacity: 1;
+            transform: none;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sección de Presentación -->
+<section id="presentacion" class="text-center py-5 bg-primary text-white">
+    <div class="container">
+        <h1 data-aos="fade-up">Bienvenidos al Mercado Rural</h1>
+        <p>Explora productos frescos y artesanales del campo.</p>
+    </div>
+</section>
+
+<!-- Sección de Puestos -->
+<section id="puestos" class="py-5">
+    <div class="container">
+        <h2 data-aos="fade-up">Puestos Destacados</h2>
+        <div class="row">
+            <!-- Ejemplo de un puesto -->
+            <div class="col-md-4" data-aos="zoom-in-left">
+                <div class="card floating-effect">
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Frutas y Verduras</h5>
+                        <p class="card-text">Productos frescos de la región.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Otro puesto -->
+            <div class="col-md-4" data-aos="zoom-in-right">
+                <div class="card floating-effect">
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Quesos Artesanales</h5>
+                        <p class="card-text">Sabores únicos y tradicionales.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sección de Servicios -->
+<section id="servicios" class="py-5 bg-light">
+    <div class="container text-center">
+        <h2 data-aos="fade-up">Nuestros Servicios</h2>
+        <div class="row">
+            <!-- Ejemplo de servicio -->
+            <div class="col-md-4" data-aos="flip-left">
+                <div class="card floating-effect">
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Asesoría Nutricional</h5>
+                        <p class="card-text">Consejos para una vida saludable.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sección de Contacto -->
+<section id="contacto" class="py-5">
+    <div class="container text-center">
+        <h2 data-aos="fade-up">Contacta con Nosotros</h2>
+        <form id="contactForm" data-aos="zoom-in">
+            <input type="text" class="form-control mb-3" placeholder="Tu Nombre" required>
+            <input type="email" class="form-control mb-3" placeholder="Tu Email" required>
+            <textarea class="form-control mb-3" rows="4" placeholder="Tu Mensaje" required></textarea>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
+</section>
+
+<!-- Bootstrap & jQuery JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- AOS JS -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 1000, // duración de las animaciones
+        easing: 'ease-out-back', // tipo de animación
+        once: true // ejecutar la animación una sola vez por sección visible
+    });
+</script>
+
+</body>
+</html>
+
+
+
+							<script>
+                            	
+    AOS.init({
+        duration: 1000, // duración de las animaciones
+        easing: 'ease-out-back', // tipo de animación
+        once: true // ejecutar la animación una sola vez por sección visible
+    });
+
+
+							</script>
+                        </body>
+                        </html>
