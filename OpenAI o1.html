@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mercado Local - Landing Page Agraria</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <!-- Iconos Bootstrap -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+  />
+
+  <style>
+    /* Estilos personalizados orientados a un mercado local agrario */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Helvetica Neue', sans-serif;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      background-color: #f9f9f2; /* Fondo claro con un tono agrario */
+      transition: background-color 0.5s ease, color 0.5s ease;
+      position: relative;
+    }
+
+    /* Modo oscuro (night mode) */
+    body.dark-mode {
+      background-color: #2c2c2c;
+      color: #f4f4f4;
+    }
+
+    /* Para asegurar que el texto de secciones, títulos, etc. tome un color adecuado en modo oscuro */
+    .dark-mode .section-title {
+      color: #eaeaea;
+    }
+
+    .dark-mode p {
+      color: #ddd;
+    }
+
+    .dark-mode h1,
+    .dark-mode h2,
+    .dark-mode h5 {
+      color: #fff;
+    }
+
+    .dark-mode .card {
+      background-color: #3a3a3a;
+      color: #f4f4f4;
+    }
+
+    .dark-mode .testimonial {
+      background-color: #3a3a3a;
+      color: #f4f4f4;
+    }
+
+    /* Navbar con tonos verdes */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 999;
+      transition: background-color 0.3s ease;
+    }
+
+    .navbar {
+      background-color: #4caf50; /* Verde principal */
+    }
+
+    body.dark-mode .navbar {
+      background-color: #1b1b1b;
+    }
+
+    .navbar-brand,
+    .nav-link {
+      color: #fff !important;
+      transition: color 0.3s ease;
+    }
+
+    .navbar-brand:hover,
+    .nav-link:hover {
+      color: #e8e8e8 !important;
+    }
+
+    /* Botón de alternar modo noche/día */
+    #themeToggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      font-size: 1.2rem;
+      margin-left: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    #themeToggle:hover {
+      color: #e8e8e8;
+    }
+
+    /* Botón "Scroll to top" */
+    #toTop {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1rem;
+      border-radius: 0.375rem;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      display: none;
+      z-index: 999;
+      transition: background-color 0.3s ease;
+    }
+
+    #toTop:hover {
+      background-color: #43a047;
+    }
+
+    /* Header / Presentación con imagen agraria */
+    header {
+      background: url('https://images.unsplash.com/photo-1487433108841-7241d96f48c3') center center/cover no-repeat;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-align: center;
+      position: relative;
+      transition: background 0.5s ease;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 0;
+      transition: background 0.5s ease;
+    }
+
+    header .container {
+      z-index: 1;
+      padding-top: 5rem; /* Compensa el navbar fixed */
+    }
+
+    header h1 {
+      font-size: 3.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    header p {
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Shape Divider for header -> next section */
+    .custom-shape-divider-bottom-landing {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+      transform: rotate(180deg);
+      z-index: 1;
+    }
+
+    .custom-shape-divider-bottom-landing svg {
+      position: relative;
+      display: block;
+      width: calc(100% + 1.3px);
+      height: 150px;
+    }
+
+    .custom-shape-divider-bottom-landing .shape-fill {
+      fill: #f9f9f2;
+    }
+
+    /* Animaciones personalizadas */
+    @keyframes fade-up {
+      0% {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fade-in {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .fade-up {
+      opacity: 0;
+      animation: fade-up 1s ease forwards;
+    }
+
+    .fade-in {
+      opacity: 0;
+      animation: fade-in 1.5s ease forwards;
+    }
+
+    /* Títulos de sección */
+    .section-title {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      font-size: 2rem;
+      font-weight: bold;
+      text-align: center;
+      color: #333;
+      transition: color 0.5s ease;
+    }
+
+    /* Cards con estilo suave y detalles verdes */
+    .card {
+      border: 0;
+      transition: transform 0.3s, background-color 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+      transition: opacity 0.3s ease;
+    }
+
+    .card-img-top:hover {
+      opacity: 0.9;
+    }
+
+    .btn-primary {
+      background-color: #4caf50;
+      border-color: #4caf50;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: #43a047;
+      border-color: #43a047;
+    }
+
+    .btn-outline-light {
+      color: #fff;
+      border-color: #fff;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .btn-outline-light:hover {
+      background-color: #fff;
+      color: #4caf50;
+    }
+
+    /* Sección de Testimonios - usando Carousel de Bootstrap */
+    .testimonial {
+      background-color: #fcfcf7;
+      padding: 2rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.5s ease, color 0.5s ease;
+      margin: 1rem;
+    }
+
+    .quote-icon {
+      font-size: 2rem;
+      color: #4caf50;
+      transition: color 0.5s ease;
+      margin-right: 0.5rem;
+    }
+
+    /* Footer con un verde más oscuro */
+    footer {
+      background: #388e3c; /* Verde oscuro */
+      color: #fff;
+      padding: 1.5rem 0;
+      text-align: center;
+      margin-top: 3rem;
+      transition: background-color 0.5s ease, color 0.5s ease;
+      position: relative;
+    }
+
+    body.dark-mode footer {
+      background: #1b1b1b;
+    }
+
+    /* Shape Divider for final section -> wave top on footer */
+    .custom-shape-divider-top-footer {
+      position: absolute;
+      top: -150px;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+      transform: rotate(0deg);
+      z-index: 1;
+    }
+
+    .custom-shape-divider-top-footer svg {
+      position: relative;
+      display: block;
+      width: calc(100% + 1.3px);
+      height: 150px;
+    }
+
+    .custom-shape-divider-top-footer .shape-fill {
+      fill: #f9f9f2;
+    }
+  </style>
+</head>
+<body>
+  <!-- Barra de Navegación -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="#">Mercado Agrario</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="#presentacion">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#puestos">Puestos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#productos">Productos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#testimonios">Testimonios</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contacto">Contacto</a>
+          </li>
+        </ul>
+        <!-- Botón para alternar modo -->
+        <button id="themeToggle" title="Alternar modo noche/día">
+          <i class="bi bi-moon"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Encabezado / Presentación -->
+  <header id="presentacion">
+    <div class="container fade-in">
+      <h1>Bienvenido a Nuestro Mercado Agrario</h1>
+      <p>
+        Descubre lo mejor de la comunidad, apoya a los productores locales y
+        lleva a casa productos de calidad.
+      </p>
+      <a href="#puestos" class="btn btn-primary btn-lg me-2">Ver Puestos</a>
+      <a href="#productos" class="btn btn-outline-light btn-lg">Ver Productos</a>
+    </div>
+    <div class="custom-shape-divider-bottom-landing">
+      <svg
+        data-name="Layer 1"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1200 120"
+        preserveAspectRatio="none"
+      >
+        <path
+          d="M985.66,83.15c-59.2-3.68-111.11-27.79-166.61-43.64C761.08,25.77,705.59,15.84,649.55,21.3c-34.56,3.28-68.59,12.27-103,20.62C502.87,55.2,463.59,66,422.15,66.14c-45.14.16-85.26-13.07-127-25.47C267,30.29,225.18,19.61,181.17,24.77c-30,3.43-58.15,14-86.44,24.24C66.83,59.09,38.77,67.77,9.24,71.63c-3.32.42-6.52,1.07-9.24,1.72V120H1200V95.8C1181.76,99.81,1161.69,88.52,1141,85.81,1098.86,80.84,1043.14,87.47,985.66,83.15Z"
+          class="shape-fill"
+        ></path>
+      </svg>
+    </div>
+  </header>
+
+  <!-- Sección de Puestos -->
+  <section id="puestos" class="py-5">
+    <div class="container">
+      <h2 class="section-title fade-up">Nuestros Puestos</h2>
+      <p class="text-center mb-5 fade-up">
+        Conoce los diversos puestos del mercado donde encontrarás variedad de
+        alimentos, artesanías y más.
+      </p>
+
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col fade-up">
+          <div class="card h-100">
+            <img
+              src="https://images.unsplash.com/photo-1601314163921-3f81248f5882"
+              class="card-img-top"
+              alt="Puesto de Vegetales"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Puesto de Vegetales</h5>
+              <p class="card-text">
+                Frescos y orgánicos, directos de la huerta local. Variedad de
+                hojas verdes, tomates, zanahorias y más.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col fade-up">
+          <div class="card h-100">
+            <img
+              src="https://images.unsplash.com/photo-1531870974501-62799be2d1c5"
+              class="card-img-top"
+              alt="Puesto de Frutas"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Puesto de Frutas</h5>
+              <p class="card-text">
+                Prueba la dulzura y frescura de frutas exóticas y de estación,
+                perfectas para tus jugos y postres.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col fade-up">
+          <div class="card h-100">
+            <img
+              src="https://images.unsplash.com/photo-1573032218503-48ef49aa59c0"
+              class="card-img-top"
+              alt="Puesto de Artesanías"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Puesto de Artesanías</h5>
+              <p class="card-text">
+                Encuentra hermosas creaciones hechas a mano por artesanos locales.
+                Perfectos regalos y recuerdos.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Productos -->
+  <section id="productos" class="py-5 bg-light">
+    <div class="container">
+      <h2 class="section-title fade-up">Productos Destacados</h2>
+      <p class="text-center mb-5 fade-up">
+        Descubre algunos de nuestros productos más populares y de mejor calidad.
+      </p>
+
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col fade-up">
+          <div class="card h-100">
+            <img
+              src="https://images.unsplash.com/photo-1573621570236-d7315d6bf0ec"
+              class="card-img-top"
+              alt="Mermelada Casera"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Mermelada Casera</h5>
+              <p class="card-text">
+                Hecha con frutas locales seleccionadas cuidadosamente. Sabor
+                natural y exquisito.
+              </p>
+              <button
+                class="btn btn-primary"
+                onclick="verDetalles('Mermelada Casera')"
+              >
+                Ver detalles
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col fade-up">
+          <div class="card h-100">
+            <img
+              src="https://images.unsplash.com/photo-1524594150395-8da34e541eaf"
+              class="card-img-top"
+              alt="Miel Orgánica"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Miel Orgánica</h5>
+              <p class="card-text">
+                Natural y rica en nutrientes, obtenida de colmenas locales libres
+                de pesticidas y químicos.
+              </p>
+              <button
+                class="btn btn-primary"
+                onclick="verDetalles('Miel Orgánica')"
+              >
+                Ver detalles
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col fade-up">
+          <div class="card h-100">
+            <img
+              src="https://images.unsplash.com/photo-1600986608476-230b04c44d2e"
+              class="card-img-top"
+              alt="Artesanías de Madera"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Artesanías de Madera</h5>
+              <p class="card-text">
+                Talladas a mano con maderas recicladas. Arte único para decorar
+                tu hogar.
+              </p>
+              <button
+                class="btn btn-primary"
+                onclick="verDetalles('Artesanías de Madera')"
+              >
+                Ver detalles
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Testimonios con Carousel -->
+  <section id="testimonios" class="py-5">
+    <div class="container">
+      <h2 class="section-title fade-up">Testimonios</h2>
+      <p class="text-center mb-5 fade-up">
+        Lo que nuestros clientes dicen de nosotros
+      </p>
+      <div class="fade-up">
+        <div id="carouselTestimonios" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="testimonial d-flex flex-column justify-content-center align-items-center">
+                <div class="d-flex align-items-center mb-3">
+                  <span class="quote-icon bi bi-quote"></span>
+                  <h5 class="m-0">Excelente Calidad</h5>
+                </div>
+                <p class="text-center">
+                  Siempre encuentro frutas y verduras frescas y los precios son justos.
+                  ¡Me encanta apoyar a los productores locales!
+                </p>
+                <small>- María Pérez</small>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="testimonial d-flex flex-column justify-content-center align-items-center">
+                <div class="d-flex align-items-center mb-3">
+                  <span class="quote-icon bi bi-quote"></span>
+                  <h5 class="m-0">Artesanías Increíbles</h5>
+                </div>
+                <p class="text-center">
+                  Las artesanías son hermosas y únicas. Compré unos adornos de madera
+                  que se ven geniales en mi sala.
+                </p>
+                <small>- Juan López</small>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="testimonial d-flex flex-column justify-content-center align-items-center">
+                <div class="d-flex align-items-center mb-3">
+                  <span class="quote-icon bi bi-quote"></span>
+                  <h5 class="m-0">¡Variedad y Frescura!</h5>
+                </div>
+                <p class="text-center">
+                  Me encantan las frutas de temporada. Siempre encuentro algo nuevo
+                  y fresco en cada visita.
+                </p>
+                <small>- Sofía Méndez</small>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselTestimonios" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselTestimonios" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Contacto -->
+  <section id="contacto" class="py-5 bg-light">
+    <div class="container">
+      <h2 class="section-title fade-up">Contáctanos</h2>
+      <p class="text-center mb-5 fade-up">
+        Para más información, sugerencias o comentarios.
+      </p>
+
+      <div class="row justify-content-center">
+        <div class="col-md-6 fade-up">
+          <form>
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input
+                type="text"
+                class="form-control"
+                id="nombre"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label"
+                >Correo electrónico</label
+              >
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="mensaje" class="form-label">Mensaje</label>
+              <textarea
+                class="form-control"
+                id="mensaje"
+                rows="4"
+                required
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Enviar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal para Detalles de Producto -->
+  <div
+    class="modal fade"
+    id="detalleModal"
+    tabindex="-1"
+    aria-labelledby="detalleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="detalleModalLabel">Detalles del Producto</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p id="detalleProducto"></p>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shape Divider for final wave on top of footer -->
+  <div class="custom-shape-divider-top-footer">
+    <svg
+      data-name="Layer 1"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 1200 120"
+      preserveAspectRatio="none"
+    >
+      <path
+        d="M1200 0L0 0 0 46.29c47.16 29.22 103.18 40.2 158.24 42.47 30.22 1.28 59.62-.53 87.54-5.91 22.74-4.15 43.95-10.46 66.31-14.29 33.22-5.9 66.11-3.65 99.11.51 32.55 4.11 65.1 10.15 97.66 10.08 32.74-.07 65.44-6.36 98.06-10.51 33-4.18 65.79-6.39 99.11-.49 22.85 3.83 44.92 10.08 67.57 14.17 27.94 5.38 57.53 7.25 87.78 5.9 55.22-2.14 111.22-13.13 158.37-42.18V0z"
+        class="shape-fill"
+      ></path>
+    </svg>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>(c) 2025 Mercado Local Agrario. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Botón para volver arriba -->
+  <button id="toTop"><i class="bi bi-arrow-up"></i></button>
+
+  <!-- Bootstrap JavaScript -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+  ></script>
+
+  <!-- Script personal -->
+  <script>
+    // Función para el modal de detalles
+    function verDetalles(producto) {
+      const mensaje = `Has seleccionado el producto: ${producto}. ¡Gracias por tu interés!`;
+      document.getElementById('detalleProducto').innerText = mensaje;
+      const detalleModal = new bootstrap.Modal(
+        document.getElementById('detalleModal')
+      );
+      detalleModal.show();
+    }
+
+    // Ejemplo de envío de formulario (se puede personalizar)
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      alert('Gracias por contactarnos, en breve te responderemos.');
+      form.reset();
+    });
+
+    // Intersection Observer para animaciones "fade-up" y "fade-in"
+    const faders = document.querySelectorAll('.fade-up, .fade-in');
+
+    const options = {
+      root: null,
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px',
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, options);
+
+    faders.forEach((element) => {
+      observer.observe(element);
+    });
+
+    // Modo Noche / Día
+    const body = document.body;
+    const themeToggleButton = document.getElementById('themeToggle');
+    let isDarkMode = false;
+
+    themeToggleButton.addEventListener('click', () => {
+      isDarkMode = !isDarkMode;
+      body.classList.toggle('dark-mode', isDarkMode);
+
+      // Cambiamos el ícono
+      if (isDarkMode) {
+        themeToggleButton.innerHTML = '<i class="bi bi-brightness-high"></i>';
+        themeToggleButton.title = 'Cambiar a modo día';
+      } else {
+        themeToggleButton.innerHTML = '<i class="bi bi-moon"></i>';
+        themeToggleButton.title = 'Cambiar a modo noche';
+      }
+    });
+
+    // Botón "Scroll to top"
+    const toTopBtn = document.getElementById('toTop');
+
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        toTopBtn.style.display = 'block';
+      } else {
+        toTopBtn.style.display = 'none';
+      }
+    });
+
+    toTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
