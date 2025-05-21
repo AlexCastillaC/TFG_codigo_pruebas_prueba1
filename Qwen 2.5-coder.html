@@ -1,0 +1,200 @@
+  <!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+							<style>
+								body {
+									background-color: white; /* Ensure the iframe has a white background */
+								}
+
+								/* styles.css */
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+header, footer {
+    background-color: #343a40;
+    color: white;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+h1, h2, h3 {
+    color: #343a40;
+}
+
+.container {
+    max-width: 800px;
+}
+
+section {
+    padding: 50px 0;
+}
+
+footer {
+    background-color: #343a40;
+    color: white;
+}
+
+form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.btn-primary {
+    background-color: #343a40;
+    border-color: #343a40;
+}
+
+.btn-primary:hover {
+    background-color: #282c34;
+    border-color: #282c34;
+}
+
+footer p {
+    margin-bottom: 0;
+}
+
+.nav-link.active, .nav-link:hover {
+    color: #343a40 !important;
+}
+
+
+							</style>
+                        </head>
+                        <body>
+                            <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercado Local Innovador</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Animate CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet"/>
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<!-- Header -->
+<header class="header bg-primary text-white text-center py-5 animate__animated animate__fadeInDownBig">
+    <h1>Bienvenido al Mercado Local Innovador</h1>
+    <p>Descubre los mejores productos y servicios de tu comunidad.</p>
+</header>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
+    <div class="container">
+        <a class="navbar-brand font-weight-bold" href="#">Mercado Local Innovador</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#about">¿Quiénes Somos?</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#mission">Misión</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#vision">Visión</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#events">Eventos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contacto</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- About Us Section -->
+<section id="about" class="py-5 text-center animate__animated animate__fadeInUp">
+    <div class="container">
+        <h2 class="mb-4">¿Quiénes Somos?</h2>
+        <p>Somos un mercado local innovador que busca conectar a pequeños productores con su comunidad.</p>
+    </div>
+</section>
+
+<!-- Mission Section -->
+<section id="mission" class="py-5 bg-light text-center animate__animated animate__fadeInUp">
+    <div class="container">
+        <h2 class="mb-4">Nuestra Misión</h2>
+        <p>Nuestra misión es promover la economía local y fomentar relaciones sólidas entre productores y consumidores.</p>
+    </div>
+</section>
+
+<!-- Vision Section -->
+<section id="vision" class="py-5 text-center animate__animated animate__fadeInUp">
+    <div class="container">
+        <h2 class="mb-4">Nuestra Visión</h2>
+        <p>Nuestra visión es ser el mercado local más respetado y querido de nuestra comunidad, donde todos se sientan valorados.</p>
+    </div>
+</section>
+
+<!-- Events Section -->
+<section id="events" class="py-5 bg-light text-center animate__animated animate__fadeInUp">
+    <div class="container">
+        <h2 class="mb-4">Eventos</h2>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <h3>Evento 1</h3>
+                <p>Descripción del evento 1.</p>
+            </div>
+            <div class="col-md-6 mb-4">
+                <h3>Evento 2</h3>
+                <p>Descripción del evento 2.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-5 text-center animate__animated animate__fadeInUp">
+    <div class="container">
+        <h2 class="mb-4">Contacto</h2>
+        <p>Para más información, contáctanos a través de los siguientes medios:</p>
+        <form>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Nombre" required>
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" rows="3" placeholder="Mensaje" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer bg-dark text-white py-4">
+    <div class="container">
+        <p>&copy; 2023 Mercado Local Innovador. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+
+							<script>
+                            	
+							</script>
+                        </body>
+                        </html>
