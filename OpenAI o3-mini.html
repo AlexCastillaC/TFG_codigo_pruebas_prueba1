@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mercado Agrario Local</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Variables de colores con temática agrícola */
+    :root {
+      --bg-color: #f0f5f0;
+      --text-color: #3e3e3e;
+      --section-bg: #ffffff;
+      --card-bg: #e8f5e9;
+      --link-color: #2e7d32;
+      --primary-color: #66bb6a;
+    }
+    body.dark-mode {
+      --bg-color: #2e2e2e;
+      --text-color: #f0f0f0;
+      --section-bg: #424242;
+      --card-bg: #616161;
+      --link-color: #a5d6a7;
+      --primary-color: #81c784;
+    }
+
+    /* Estilos globales */
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      scroll-behavior: smooth;
+      transition: background-color 0.3s, color 0.3s;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    a, a:hover {
+      color: var(--link-color);
+      text-decoration: none;
+    }
+    /* Secciones */
+    .section {
+      padding: 80px 0;
+      background-color: var(--section-bg);
+      transition: background-color 0.3s;
+      overflow: hidden;
+    }
+    .section.bg-light {
+      background-color: var(--bg-color) !important;
+    }
+    .section-title {
+      margin-bottom: 40px;
+      text-align: center;
+      font-weight: 600;
+      opacity: 0;
+      animation: slideInDown 1s forwards;
+    }
+    /* Animación para títulos */
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    /* Estilos para las cards */
+    .card {
+      background-color: var(--card-bg);
+      border: none;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+    }
+    /* Animación de entrada para elementos */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Animación adicional para imágenes */
+    .img-animate {
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .img-animate.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+    /* Navbar */
+    .navbar-nav .nav-link {
+      transition: color 0.3s, transform 0.3s;
+    }
+    .navbar-nav .nav-link:hover {
+      transform: translateY(-2px);
+    }
+    /* Botón de alternar modo */
+    .toggle-mode {
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: inherit;
+      font-size: 1.2rem;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+    <div class="container">
+      <a class="navbar-brand" href="#">Mercado Agrario</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+        aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+ 
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item"><a class="nav-link" href="#presentacion">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#sobre-nosotros">Nuestra Granja</a></li>
+          <li class="nav-item"><a class="nav-link" href="#puestos">Puestos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#productos">Productos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#testimonios">Testimonios</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+          <li class="nav-item ms-3">
+            <button id="modeToggle" class="toggle-mode" title="Alternar modo diurno/nocturno">
+              <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-sun" viewBox="0 0 16 16">
+                <path d="M8 4.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM8 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 8 1zm0 12a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 8 13zm7-5a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1 0-1h1A.5.5 0 0 1 15 8zm-12 0a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1 0-1h1A.5.5 0 0 1 3 8zm9.657-4.657a.5.5 0 0 1 0 .707l-.708.708a.5.5 0 1 1-.707-.707l.708-.708a.5.5 0 0 1 .707 0zm-8.486 8.486a.5.5 0 0 1 0 .707l-.708.708a.5.5 0 0 1-.707-.707l.708-.708a.5.5 0 0 1 .707 0zm8.486 0a.5.5 0 0 1 .707 0l.708.708a.5.5 0 0 1-.707.707l-.708-.708a.5.5 0 0 1 0-.707zm-8.486-8.486a.5.5 0 0 1 .707 0l.708.708a.5.5 0 1 1-.707.707l-.708-.708a.5.5 0 0 1 0-.707z"/>
+              </svg>
+              <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-moon d-none" viewBox="0 0 16 16">
+                <path d="M6 0a6 6 0 0 0 0 12 6.002 6.002 0 0 0 5.473-3.741A5.5 5.5 0 1 1 6 0z"/>
+              </svg>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sección de Presentación -->
+  <section id="presentacion" class="section bg-light">
+    <div class="container">
+      <h2 class="section-title">Bienvenidos al Corazón de la Agricultura</h2>
+      <div class="row align-items-center">
+        <div class="col-md-6 fade-in">
+          <p class="lead">En nuestro mercado agrario encontrarás productos frescos, cultivados con dedicación y pasión. Conecta con la tierra y disfruta de la calidad que solo lo natural puede ofrecer.</p>
+          <p class="lead">¡Ven y descubre lo mejor de la granja en un ambiente moderno y acogedor!</p>
+        </div>
+        <div class="col-md-6">
+          <img src="https://via.placeholder.com/500x300?text=Agricultura" alt="Campo y Granja" class="img-fluid rounded shadow img-animate">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección Sobre Nosotros (Nuestra Granja) -->
+  <section id="sobre-nosotros" class="section">
+    <div class="container">
+      <h2 class="section-title">Nuestra Granja</h2>
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <img src="https://via.placeholder.com/500x300?text=Granja" alt="Nuestra Granja" class="img-fluid rounded shadow img-animate">
+        </div>
+        <div class="col-md-6 fade-in">
+          <p class="lead">Somos una familia de agricultores comprometidos con la tierra. Nuestra misión es cultivar productos de alta calidad de manera sostenible y compartir los frutos de nuestro esfuerzo con la comunidad.</p>
+          <p class="lead">Cada cosecha es el resultado de técnicas tradicionales y prácticas innovadoras que honran la naturaleza.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Puestos -->
+  <section id="puestos" class="section bg-light">
+    <div class="container">
+      <h2 class="section-title">Puestos del Mercado</h2>
+      <div class="row" id="puestos-container">
+        <!-- Los puestos se generarán dinámicamente -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Productos -->
+  <section id="productos" class="section">
+    <div class="container">
+      <h2 class="section-title">Productos Frescos</h2>
+      <div class="row" id="productos-container">
+        <!-- Los productos se generarán dinámicamente -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Testimonios -->
+  <section id="testimonios" class="section bg-light">
+    <div class="container">
+      <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+      <div class="row">
+        <div class="col-md-4 fade-in">
+          <div class="card h-100 p-3">
+            <div class="card-body">
+              <p class="card-text">"La frescura de los productos y la calidez de la atención me hicieron sentir como en casa. ¡Altamente recomendado!"</p>
+              <h5 class="card-title">- Juan Pérez</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 fade-in">
+          <div class="card h-100 p-3">
+            <div class="card-body">
+              <p class="card-text">"Un mercado lleno de vida y tradición. Los productos son de la mejor calidad y el ambiente es único."</p>
+              <h5 class="card-title">- Marta Ruiz</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 fade-in">
+          <div class="card h-100 p-3">
+            <div class="card-body">
+              <p class="card-text">"Me encanta poder apoyar a los agricultores locales y llevar a casa productos tan frescos y sabrosos."</p>
+              <h5 class="card-title">- Luis Gómez</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Contacto -->
+  <section id="contacto" class="section">
+    <div class="container">
+      <h2 class="section-title">Contáctanos</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-8 fade-in">
+          <form>
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombre" placeholder="Tu nombre">
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Correo Electrónico</label>
+              <input type="email" class="form-control" id="email" placeholder="nombre@ejemplo.com">
+            </div>
+            <div class="mb-3">
+              <label for="mensaje" class="form-label">Mensaje</label>
+              <textarea class="form-control" id="mensaje" rows="4" placeholder="Escribe tu mensaje"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary w-100" style="background-color: var(--primary-color); border: none;">Enviar Mensaje</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white text-center py-3">
+    <div class="container">
+      <p class="mb-0">&copy; 2025 Mercado Agrario. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS y dependencias -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- JavaScript básico -->
+  <script>
+    // Datos de ejemplo para puestos (temática agrícola)
+    const puestos = [
+      {
+        nombre: "Huerta Orgánica",
+        descripcion: "Cultivos frescos y ecológicos directamente de la tierra.",
+        imagen: "https://via.placeholder.com/300x200?text=Huerta"
+      },
+      {
+        nombre: "Granja Avícola",
+        descripcion: "Huevos y productos avícolas de granja en su punto.",
+        imagen: "https://via.placeholder.com/300x200?text=Avicultura"
+      },
+      {
+        nombre: "Lácteos Artesanales",
+        descripcion: "Leche, quesos y yogures elaborados con métodos tradicionales.",
+        imagen: "https://via.placeholder.com/300x200?text=L%C3%A1cteos"
+      }
+    ];
+
+    // Datos de ejemplo para productos (temática agrícola)
+    const productos = [
+      {
+        nombre: "Zanahorias Frescas",
+        precio: "$1.50/kg",
+        imagen: "https://via.placeholder.com/300x200?text=Zanahorias"
+      },
+      {
+        nombre: "Miel Natural",
+        precio: "$7.00",
+        imagen: "https://via.placeholder.com/300x200?text=Miel"
+      },
+      {
+        nombre: "Lechuga Orgánica",
+        precio: "$0.99",
+        imagen: "https://via.placeholder.com/300x200?text=Lechuga"
+      }
+    ];
+
+    // Función para renderizar puestos
+    function renderPuestos() {
+      const container = document.getElementById('puestos-container');
+      puestos.forEach(puesto => {
+        const col = document.createElement('div');
+        col.className = 'col-md-4 mb-4 fade-in';
+        col.innerHTML = `
+          <div class="card h-100">
+            <img src="${puesto.imagen}" class="card-img-top img-animate" alt="${puesto.nombre}">
+            <div class="card-body">
+              <h5 class="card-title">${puesto.nombre}</h5>
+              <p class="card-text">${puesto.descripcion}</p>
+            </div>
+          </div>
+        `;
+        container.appendChild(col);
+      });
+    }
+
+    // Función para renderizar productos
+    function renderProductos() {
+      const container = document.getElementById('productos-container');
+      productos.forEach(producto => {
+        const col = document.createElement('div');
+        col.className = 'col-md-4 mb-4 fade-in';
+        col.innerHTML = `
+          <div class="card h-100">
+            <img src="${producto.imagen}" class="card-img-top img-animate" alt="${producto.nombre}">
+            <div class="card-body">
+              <h5 class="card-title">${producto.nombre}</h5>
+              <p class="card-text">Precio: ${producto.precio}</p>
+            </div>
+          </div>
+        `;
+        container.appendChild(col);
+      });
+    }
+
+    // Función para observar la aparición de elementos al hacer scroll y aplicar la animación
+    function observerAnimation() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+     
+      document.querySelectorAll('.fade-in').forEach(elem => {
+        observer.observe(elem);
+      });
+      document.querySelectorAll('.img-animate').forEach(elem => {
+        observer.observe(elem);
+      });
+    }
+
+    // Función para alternar modo diurno/nocturno
+    function toggleMode() {
+      document.body.classList.toggle('dark-mode');
+      // Alterna visibilidad de iconos
+      document.getElementById('icon-sun').classList.toggle('d-none');
+      document.getElementById('icon-moon').classList.toggle('d-none');
+    }
+
+    // Inicializamos las funciones una vez cargado el DOM
+    document.addEventListener('DOMContentLoaded', () => {
+      renderPuestos();
+      renderProductos();
+      observerAnimation();
+      document.getElementById('modeToggle').addEventListener('click', toggleMode);
+    });
+  </script>
+</body>
+</html>
